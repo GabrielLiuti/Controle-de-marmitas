@@ -46,17 +46,42 @@ function atualizarListaMarmitas() {
   data.marmitas.forEach(m => {
     const div = document.createElement("div");
     div.className = "marmita-item";
-    div.innerHTML = `<div><strong>${m.nome}</strong> — R$ ${m.valor.toFixed(2)}</div>
-                     <div>Estoque: ${m.estoqueAtual}</div>`;
-    const ctr = document.createElement("div"); ctr.className = "controls";
+    div.innerHTML = `
+      <div><strong>${m.nome}</strong> — R$ ${m.valor.toFixed(2)}</div>
+      <div>Estoque: ${m.estoqueAtual}</div>
+    `;
+    
+    const ctr = document.createElement("div");
+    ctr.className = "controls";
+
+    // Botões de adicionar/remover
     [[+10,"btn-primary"],[+1,"btn-primary"],[-1,"btn-danger"],[-5,"btn-danger"]].forEach(([delta,cls])=>{
-      const btn=document.createElement("button");
-      btn.className="btn "+cls;
-      btn.innerText=delta>0?`+${delta}`:`${delta}`;
-      btn.onclick=()=>alterarEstoque(m.id,delta);
+      const btn = document.createElement("button");
+      btn.className = "btn "+cls;
+      btn.innerText = delta>0?`+${delta}`:`${delta}`;
+      btn.onclick = () => alterarEstoque(m.id, delta);
       ctr.appendChild(btn);
     });
-    div.appendChild(ctr); cont.appendChild(div);
+
+    // Botão de excluir marmita
+    const btnExcluir = document.createElement("button");
+    btnExcluir.className = "btn btn-danger";
+    btnExcluir.innerText = "❌ Excluir";
+    btnExcluir.onclick = () => {
+      const confirma = confirm(`Deseja excluir a marmita "${m.nome}"?`);
+      if(confirma){
+        data.marmitas = data.marmitas.filter(x => x.id !== m.id);
+        data.historico = data.historico.filter(h => h.idMarmita !== m.id);
+        saveData(data);
+        atualizarListaMarmitas();
+        atualizarHistorico();
+        atualizarRelatorio();
+      }
+    };
+
+    ctr.appendChild(btnExcluir);
+    div.appendChild(ctr);
+    cont.appendChild(div);
   });
 }
 
@@ -102,7 +127,6 @@ document.getElementById("btn-reset").onclick = () => {
     alert("Histórico e relatório resetados!");
   }
 }
-
 
 // Inicial
 mostrarSection("estoque-section");
