@@ -91,10 +91,12 @@ input {
   flex-wrap: wrap;
 }
 
+/* Controles (botoes) */
 .marmita-item .controls {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
+  margin-top: 5px;
 }
 
 /* Responsividade geral */
@@ -115,4 +117,11 @@ input {
     flex-direction: column;
     align-items: flex-start;
   }
+  .marmita-item .controls {
+    width: 100%;
+  }
+  .marmita-item .controls button {
+    flex: 1 1 auto;
+  }
 }
+
