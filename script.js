@@ -43,18 +43,21 @@ document.getElementById("btn-salvar").onclick = () => {
 function atualizarListaMarmitas() {
   const cont = document.getElementById("estoque-section");
   cont.innerHTML = "";
+  if(data.marmitas.length === 0){
+    cont.innerHTML = "<p>Nenhuma marmita cadastrada.</p>";
+    return;
+  }
+
   data.marmitas.forEach(m => {
     const div = document.createElement("div");
     div.className = "marmita-item";
-    div.innerHTML = `
-      <div><strong>${m.nome}</strong> — R$ ${m.valor.toFixed(2)}</div>
-      <div>Estoque: ${m.estoqueAtual}</div>
-    `;
-    
+
+    const info = document.createElement("div");
+    info.innerHTML = `<strong>${m.nome}</strong> — R$ ${m.valor.toFixed(2)}<br>Estoque: ${m.estoqueAtual}`;
+
     const ctr = document.createElement("div");
     ctr.className = "controls";
 
-    // Botões de adicionar/remover
     [[+10,"btn-primary"],[+1,"btn-primary"],[-1,"btn-danger"],[-5,"btn-danger"]].forEach(([delta,cls])=>{
       const btn = document.createElement("button");
       btn.className = "btn "+cls;
@@ -63,7 +66,7 @@ function atualizarListaMarmitas() {
       ctr.appendChild(btn);
     });
 
-    // Botão de excluir marmita
+    // Botão excluir
     const btnExcluir = document.createElement("button");
     btnExcluir.className = "btn btn-danger";
     btnExcluir.innerText = "❌ Excluir";
@@ -78,8 +81,9 @@ function atualizarListaMarmitas() {
         atualizarRelatorio();
       }
     };
-
     ctr.appendChild(btnExcluir);
+
+    div.appendChild(info);
     div.appendChild(ctr);
     cont.appendChild(div);
   });
