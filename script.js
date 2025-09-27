@@ -1,0 +1,108 @@
+const STORAGE_KEY = "controleMarmitasData";
+
+function saveData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+function loadData() {
+  const s = localStorage.getItem(STORAGE_KEY);
+  return s ? JSON.parse(s) : { marmitas: [], historico: [] };
+}
+let data = loadData();
+
+function gerarId() { return Date.now().toString(); }
+
+function mostrarSection(id) {
+  document.querySelectorAll(".section").forEach(sec => sec.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+  if(id === "estoque-section") atualizarListaMarmitas();
+}
+
+// Botões topo
+document.getElementById("btn-cadastrar").onclick = () => mostrarSection("cadastrar-section");
+document.getElementById("btn-historico").onclick = () => { atualizarHistorico(); mostrarSection("historico-section"); }
+document.getElementById("btn-relatorio").onclick = () => { atualizarRelatorio(); mostrarSection("relatorio-section"); }
+
+// Voltar
+document.getElementById("btn-voltar-cadastrar").onclick = () => mostrarSection("estoque-section");
+document.getElementById("btn-voltar-historico").onclick = () => mostrarSection("estoque-section");
+document.getElementById("btn-voltar-relatorio").onclick = () => mostrarSection("estoque-section");
+
+// Salvar Marmita
+document.getElementById("btn-salvar").onclick = () => {
+  const nome = document.getElementById("input-nome").value.trim();
+  const valor = parseFloat(document.getElementById("input-valor").value);
+  const quantidade = parseInt(document.getElementById("input-quantidade").value, 10);
+  if (!nome || isNaN(valor) || isNaN(quantidade)) { alert("Preencha tudo!"); return; }
+  const nova = { id: gerarId(), nome, valor, estoqueAtual: quantidade };
+  data.marmitas.push(nova);
+  data.historico.push({ timestamp: Date.now(), idMarmita: nova.id, delta: quantidade, tipo: "adição" });
+  saveData(data);
+  alert("Marmita cadastrada!");
+  mostrarSection("estoque-section");
+}
+
+// Estoque
+function atualizarListaMarmitas() {
+  const cont = document.getElementById("estoque-section");
+  cont.innerHTML = "";
+  data.marmitas.forEach(m => {
+    const div = document.createElement("div");
+    div.className = "marmita-item";
+    div.innerHTML = `<div><strong>${m.nome}</strong> — R$ ${m.valor.toFixed(2)}</div>
+                     <div>Estoque: ${m.estoqueAtual}</div>`;
+    const ctr = document.createElement("div"); ctr.className = "controls";
+    [[+10,"btn-primary"],[+1,"btn-primary"],[-1,"btn-danger"],[-5,"btn-danger"]].forEach(([delta,cls])=>{
+      const btn=document.createElement("button");
+      btn.className="btn "+cls;
+      btn.innerText=delta>0?`+${delta}`:`${delta}`;
+      btn.onclick=()=>alterarEstoque(m.id,delta);
+      ctr.appendChild(btn);
+    });
+    div.appendChild(ctr); cont.appendChild(div);
+  });
+}
+
+function alterarEstoque(id, delta) {
+  const m = data.marmitas.find(x=>x.id===id); if(!m) return;
+  m.estoqueAtual += delta; if(m.estoqueAtual<0) m.estoqueAtual=0;
+  data.historico.push({ timestamp: Date.now(), idMarmita: id, delta, tipo: delta>0?"adição":"remoção" });
+  saveData(data); atualizarListaMarmitas();
+}
+
+// Histórico
+function atualizarHistorico() {
+  const cont = document.getElementById("lista-historico");
+  cont.innerHTML = "";
+  [...data.historico].sort((a,b)=>b.timestamp-a.timestamp).forEach(h=>{
+    const marmita=data.marmitas.find(m=>m.id===h.idMarmita);
+    const dt=new Date(h.timestamp).toLocaleString("pt-BR");
+    const nome=marmita?marmita.nome:"–";
+    cont.innerHTML += `<div>${dt}: ${h.tipo==="adição"?"Adicionado":"Removido"} ${h.delta} → ${nome}</div>`;
+  });
+}
+
+// Relatório
+function atualizarRelatorio() {
+  const div = document.getElementById("relatorio-conteudo");
+  div.innerHTML = "";
+  let prod=0,rem=0;
+  data.historico.forEach(h=>{ if(h.delta>0) prod+=h.delta; else rem+=-h.delta; });
+  div.innerHTML += `<p>Total produzido: ${prod}</p>`;
+  div.innerHTML += `<p>Total vendido/removido: ${rem}</p>`;
+  div.innerHTML += `<p>Estoque atual geral: ${data.marmitas.reduce((s,m)=>s+m.estoqueAtual,0)}</p>`;
+  data.marmitas.forEach(m=>div.innerHTML+=`<p>${m.nome}: ${m.estoqueAtual}</p>`);
+}
+
+// Resetar histórico
+document.getElementById("btn-reset").onclick = () => {
+  const confirma = confirm("Tem certeza que deseja resetar TODO o histórico e relatório? Esta ação não pode ser desfeita.");
+  if(confirma){
+    data.historico = [];
+    saveData(data);
+    atualizarHistorico();
+    atualizarRelatorio();
+    alert("Histórico e relatório resetados!");
+  }
+}
+
+
+// Inicial
+mostrarSection("estoque-section");

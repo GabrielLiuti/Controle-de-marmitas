@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Controle de Marmitas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- Cabeçalho: Controle de Estoque + Botões -->
+    <div class="header">
+      <h1>Controle de Estoque</h1>
+      <div class="top-buttons">
+        <button class="btn btn-primary" id="btn-cadastrar">➕ Cadastrar</button>
+        <button class="btn btn-secondary" id="btn-historico">📜 Histórico</button>
+        <button class="btn btn-secondary" id="btn-relatorio">📊 Relatório</button>
+      </div>
+      <button class="btn btn-danger" id="btn-reset">🗑️ Resetar Histórico</button>
+    </div>
+
+    <!-- Seções -->
+    <div id="estoque-section" class="section"></div>
+
+    <div id="cadastrar-section" class="section hidden">
+      <h2>Cadastrar Marmita</h2>
+      <label>Nome:</label>
+      <input type="text" id="input-nome" />
+      <label>Valor (R$):</label>
+      <input type="number" id="input-valor" step="0.01" />
+      <label>Quantidade Inicial:</label>
+      <input type="number" id="input-quantidade" />
+      <button class="btn btn-primary" id="btn-salvar">Salvar</button>
+      <button class="btn btn-secondary" id="btn-voltar-cadastrar">Voltar</button>
+    </div>
+
+    <div id="historico-section" class="section hidden">
+      <h2>Histórico</h2>
+      <div id="lista-historico"></div>
+      <button class="btn btn-secondary" id="btn-voltar-historico">Voltar</button>
+    </div>
+
+    <div id="relatorio-section" class="section hidden">
+      <h2>Relatório</h2>
+      <div id="relatorio-conteudo"></div>
+      <button class="btn btn-secondary" id="btn-voltar-relatorio">Voltar</button>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
