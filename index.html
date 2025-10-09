@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Controle de Marmitas</title>
@@ -6,8 +9,8 @@
       margin: 0;
       padding: 20px;
       font-family: Arial, sans-serif;
-      background-color: #ffffff; /* fundo branco */
-      color: #000; /* texto preto */
+      background-color: #ffffff;
+      color: #000000;
       box-sizing: border-box;
     }
 
@@ -45,28 +48,28 @@
       padding: 10px 16px;
       font-size: 1em;
       border: none;
-      border-radius: 25px;
+      border-radius: 8px;
       cursor: pointer;
       white-space: nowrap;
+      color: white;
     }
 
-    .btn-primary { background-color: #8bc34a; color: white; }
-    .btn-secondary { background-color: #03a9f4; color: white; }
-    .btn-danger { background-color: #e57373; color: white; }
+    .btn-primary { background-color: #8bc34a; }
+    .btn-secondary { background-color: #03a9f4; }
+    .btn-danger { background-color: #e57373; }
 
     .section {
       margin-top: 20px;
-      background-color: #ffffff; /* fundo branco */
+      background-color: #ffffff;
       padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border-radius: 10px;
     }
 
     .hidden { display: none; }
 
     input {
       font-size: 1em;
-      padding: 8px 12px;
+      padding: 6px 12px;
       width: 250px;
       margin: 8px auto;
       display: block;
@@ -74,15 +77,16 @@
       border: 1px solid #ccc;
       background-color: #ffffff;
       color: #000;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
     }
 
-    .marmita-lista, .historico, .relatorio {
+    .marmita-lista {
       margin-top: 15px;
     }
 
     .marmita-item {
       background-color: #ffffff;
-      border-radius: 15px;
+      border-radius: 25px;
       padding: 12px 16px;
       margin: 10px 0;
       display: flex;
@@ -93,17 +97,19 @@
       color: #000;
     }
 
-    .marmita-item .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-top: 5px;
-    }
-
     .marmita-item .controls button {
       border-radius: 20px;
       padding: 6px 12px;
       font-size: 0.9em;
+    }
+
+    .historico, .relatorio, #totais-principais {
+      background-color: #ffffff;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 1em;
+      color: #000;
+      margin-bottom: 10px;
     }
 
     @media (max-width: 600px) {
@@ -113,7 +119,6 @@
       .marmita-item .controls { width: 100%; }
       .marmita-item .controls button { flex: 1 1 auto; }
     }
-
   </style>
 </head>
 <body>
@@ -121,42 +126,44 @@
     <div class="header">
       <h1>🥘 Controle de Marmitas</h1>
       <div class="top-buttons">
-        <button id="btn-cadastrar" class="btn btn-primary">Nova Marmita</button>
-        <button id="btn-historico" class="btn btn-secondary">Histórico</button>
-        <button id="btn-relatorio" class="btn btn-secondary">Relatório</button>
-        <button id="btn-reset" class="btn btn-danger">Resetar Histórico</button>
+        <button class="btn btn-primary" id="btn-cadastrar">Cadastrar Marmita</button>
+        <button class="btn btn-secondary" id="btn-historico">Histórico</button>
+        <button class="btn btn-secondary" id="btn-relatorio">Relatório</button>
+        <button class="btn btn-danger" id="btn-reset">Resetar Histórico</button>
       </div>
     </div>
 
     <!-- Estoque -->
-    <div id="estoque-section" class="section">
-      <h2>Estoque de Marmitas</h2>
+    <section id="estoque-section" class="section">
+      <!-- Totais em reais -->
+      <div id="totais-principais"></div>
+      <!-- Lista de marmitas -->
       <div id="lista-marmitas" class="marmita-lista"></div>
-    </div>
+    </section>
 
-    <!-- Cadastrar -->
-    <div id="cadastrar-section" class="section hidden">
+    <!-- Cadastrar Marmita -->
+    <section id="cadastrar-section" class="section hidden">
       <h2>Cadastrar Marmita</h2>
       <input type="text" id="input-nome" placeholder="Nome da marmita">
       <input type="number" id="input-valor" placeholder="Valor (R$)">
       <input type="number" id="input-quantidade" placeholder="Quantidade">
-      <button id="btn-salvar" class="btn btn-primary">Salvar Marmita</button>
-      <button id="btn-voltar-cadastrar" class="btn btn-secondary">Voltar</button>
-    </div>
+      <button class="btn btn-primary" id="btn-salvar">Salvar Marmita</button>
+      <button class="btn btn-secondary" id="btn-voltar-cadastrar">Voltar</button>
+    </section>
 
     <!-- Histórico -->
-    <div id="historico-section" class="section hidden">
-      <h2>Histórico</h2>
+    <section id="historico-section" class="section hidden">
+      <h2>Histórico de Movimentações</h2>
       <div id="lista-historico" class="historico"></div>
-      <button id="btn-voltar-historico" class="btn btn-secondary">Voltar</button>
-    </div>
+      <button class="btn btn-secondary" id="btn-voltar-historico">Voltar</button>
+    </section>
 
     <!-- Relatório -->
-    <div id="relatorio-section" class="section hidden">
+    <section id="relatorio-section" class="section hidden">
       <h2>Relatório</h2>
       <div id="relatorio-conteudo" class="relatorio"></div>
-      <button id="btn-voltar-relatorio" class="btn btn-secondary">Voltar</button>
-    </div>
+      <button class="btn btn-secondary" id="btn-voltar-relatorio">Voltar</button>
+    </section>
   </div>
 
   <script>
@@ -192,23 +199,25 @@
       const nome = document.getElementById("input-nome").value.trim();
       const valor = parseFloat(document.getElementById("input-valor").value);
       const quantidade = parseInt(document.getElementById("input-quantidade").value, 10);
-      if (!nome || isNaN(valor) || isNaN(quantidade)) { alert("Preencha todos os campos!"); return; }
-      const nova = { id: gerarId(), nome, valor, estoqueAtual: quantidade };
+      if (!nome || isNaN(valor) || isNaN(quantidade)) { alert("Preencha tudo!"); return; }
+      const nova = { id: gerarId(), nome, valor, estoqueAtual: quantidade, totalVendido: 0 };
       data.marmitas.push(nova);
       data.historico.push({ timestamp: Date.now(), idMarmita: nova.id, delta: quantidade, tipo: "adição" });
       saveData(data);
+      alert("Marmita cadastrada!");
       mostrarSection("estoque-section");
       atualizarListaMarmitas();
     }
 
-    // Atualizar lista de marmitas
     function atualizarListaMarmitas() {
       const cont = document.getElementById("lista-marmitas");
       cont.innerHTML = "";
       if(data.marmitas.length === 0){
         cont.innerHTML = "<p>Nenhuma marmita cadastrada.</p>";
+        document.getElementById("totais-principais").innerHTML = "";
         return;
       }
+
       data.marmitas.forEach(m => {
         const div = document.createElement("div");
         div.className = "marmita-item";
@@ -227,6 +236,7 @@
           ctr.appendChild(btn);
         });
 
+        // Botão excluir
         const btnExcluir = document.createElement("button");
         btnExcluir.className = "btn btn-danger";
         btnExcluir.innerText = "❌ Excluir";
@@ -246,49 +256,68 @@
         div.appendChild(ctr);
         cont.appendChild(div);
       });
+
+      atualizarTotais();
     }
 
     function alterarEstoque(id, delta) {
-      const m = data.marmitas.find(x => x.id === id);
-      if(!m) return;
-      m.estoqueAtual += delta;
-      if(m.estoqueAtual < 0) m.estoqueAtual = 0;
-      data.historico.push({ timestamp: Date.now(), idMarmita: id, delta, tipo: delta>0?"adição":"remoção" });
+      const m = data.marmitas.find(x=>x.id===id); if(!m) return;
+      if(delta < 0){
+        const venda = Math.min(m.estoqueAtual, Math.abs(delta));
+        m.estoqueAtual -= venda;
+        m.totalVendido += venda;
+        data.historico.push({ timestamp: Date.now(), idMarmita: id, delta: venda, tipo: "remoção" });
+      } else {
+        m.estoqueAtual += delta;
+        data.historico.push({ timestamp: Date.now(), idMarmita: id, delta, tipo: "adição" });
+      }
       saveData(data);
       atualizarListaMarmitas();
+      atualizarHistorico();
+      atualizarRelatorio();
     }
 
-    // Histórico
     function atualizarHistorico() {
       const cont = document.getElementById("lista-historico");
       cont.innerHTML = "";
       [...data.historico].sort((a,b)=>b.timestamp-a.timestamp).forEach(h=>{
-        const marmita = data.marmitas.find(m=>m.id===h.idMarmita);
-        const dt = new Date(h.timestamp).toLocaleString("pt-BR");
-        const nome = marmita ? marmita.nome : "–";
-        cont.innerHTML += `<div>${dt}: ${h.tipo==="adição"?"Adicionado":"Removido"} ${h.delta} → ${nome}</div>`;
+        const marmita=data.marmitas.find(m=>m.id===h.idMarmita);
+        const dt=new Date(h.timestamp).toLocaleString("pt-BR");
+        const nome=marmita?marmita.nome:"–";
+        cont.innerHTML += `<div>${dt}: ${h.tipo==="adição"?"Adicionado":"Vendido"} ${h.delta} → ${nome}</div>`;
       });
     }
 
-    // Relatório
     function atualizarRelatorio() {
       const div = document.getElementById("relatorio-conteudo");
       div.innerHTML = "";
       let prod=0, rem=0;
-      data.historico.forEach(h=>{ if(h.delta>0) prod+=h.delta; else rem+=-h.delta; });
+      data.marmitas.forEach(m => { prod += m.estoqueAtual + m.totalVendido; rem += m.totalVendido; });
       div.innerHTML += `<p>Total produzido: ${prod}</p>`;
-      div.innerHTML += `<p>Total vendido/removido: ${rem}</p>`;
+      div.innerHTML += `<p>Total vendido: ${rem}</p>`;
       div.innerHTML += `<p>Estoque atual geral: ${data.marmitas.reduce((s,m)=>s+m.estoqueAtual,0)}</p>`;
       data.marmitas.forEach(m=>div.innerHTML+=`<p>${m.nome}: ${m.estoqueAtual}</p>`);
     }
 
-    // Resetar histórico
+    function atualizarTotais() {
+      let totalEstoque = 0, totalVendas = 0;
+      data.marmitas.forEach(m => { totalEstoque += m.estoqueAtual * m.valor; totalVendas += m.totalVendido * m.valor; });
+      document.getElementById("totais-principais").innerHTML = `
+        <div style="display:flex; justify-content:space-between; font-weight:bold;">
+          <span>Total em Estoque: R$ ${totalEstoque.toFixed(2)}</span>
+          <span>Total Vendido: R$ ${totalVendas.toFixed(2)}</span>
+        </div>
+      `;
+    }
+
     document.getElementById("btn-reset").onclick = () => {
-      if(confirm("Tem certeza que deseja resetar TODO o histórico e relatório?")){
+      if(confirm("Tem certeza que deseja resetar TODO o histórico e relatório? Esta ação não pode ser desfeita.")){
         data.historico = [];
+        data.marmitas.forEach(m=>m.totalVendido=0);
         saveData(data);
         atualizarHistorico();
         atualizarRelatorio();
+        atualizarTotais();
         alert("Histórico e relatório resetados!");
       }
     }
