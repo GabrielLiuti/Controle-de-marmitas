@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 20px;
   font-family: Arial, sans-serif;
-  background-image: url("imagens/Marmitas.jpg");
+  background-image: url("IMG/IMG1.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -141,6 +141,7 @@ input {
   .marmita-item .controls { width: 100%; }
   .marmita-item .controls button { flex: 1 1 auto; }
 }
+
 
 
 
