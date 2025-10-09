@@ -1,312 +1,268 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Controle de Marmitas</title>
-<style>
-  body {
-    margin: 0;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    background-color: #ffffff;
-    background-image: url("imagens/marmitas.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    color: #fff;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de Marmitas</title>
+  <style>
+    /* ================== CSS ================== */
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #ffffff; /* fundo branco */
+      color: #000000;            /* texto preto */
+      box-sizing: border-box;
+    }
 
-  .container {
-    max-width: 900px;
-    margin: auto;
-  }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
 
-  .header {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    gap: 10px;
-  }
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
 
-  .header h1 {
-    font-size: 2em;
-    margin: 0;
-    flex: 1;
-    min-width: 200px;
-    color: #fff;
-  }
+    .header h1 {
+      font-size: 2em;
+      margin: 0;
+      flex: 1;
+      min-width: 200px;
+      color: #000;
+    }
 
-  .top-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+    .top-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
 
-  #btn-reset {
-    flex-shrink: 0;
-  }
+    #btn-reset { flex-shrink: 0; }
 
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 16px;
-    font-size: 1em;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    white-space: nowrap;
-  }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
 
-  .btn-primary { background-color: #8bc34a; color: white; }
-  .btn-secondary { background-color: #03a9f4; color: white; }
-  .btn-danger { background-color: #e57373; color: white; }
+    .btn-primary { background-color: #8bc34a; color: white; }
+    .btn-secondary { background-color: #03a9f4; color: white; }
+    .btn-danger { background-color: #e57373; color: white; }
 
-  .section { margin-top: 20px; }
-  .hidden { display: none; }
+    .section {
+      margin-top: 20px;
+      background-color: #ffffff; /* fundo branco sólido */
+      padding: 20px;
+      border-radius: 10px;
+      color: #000;               /* texto preto */
+    }
 
-  input {
-    font-size: 1em;
-    padding: 10px 16px;
-    width: 100%;
-    margin: 10px 0;
-    box-sizing: border-box;
-    border-radius: 25px;
-    border: 1px solid #ccc;
-  }
+    .hidden { display: none; }
 
-  .marmita-lista {
-    margin-top: 15px;
-  }
+    input {
+      font-size: 1em;
+      padding: 6px 12px;
+      width: 250px;
+      margin: 8px auto;
+      display: block;
+      border-radius: 25px;
+      border: 1px solid #ccc;
+      background-color: #ffffff;
+      color: #000000;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
 
-  .marmita-item {
-    background-color: #ffffff;
-    color: #000;
-    border-radius: 25px;
-    padding: 12px 16px;
-    margin: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
+    .marmita-lista, .historico, .relatorio {
+      margin-top: 15px;
+      background-color: #ffffff;
+      border-radius: 15px;
+      padding: 12px 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      color: #000000;
+    }
 
-  .marmita-item .controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-top: 5px;
-  }
+    .marmita-item {
+      background-color: #ffffff;
+      border-radius: 25px;
+      padding: 12px 16px;
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      color: #000000;
+    }
 
-  .marmita-item .controls button {
-    border-radius: 20px;
-    padding: 6px 12px;
-    font-size: 0.9em;
-  }
+    .marmita-item .controls button {
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 0.9em;
+    }
 
-  .historico, .relatorio {
-    background-color: #ffffff;
-    color: #000;
-    border-radius: 25px;
-    padding: 12px 16px;
-    margin-top: 15px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-
-  @media (max-width: 600px) {
-    .header { flex-direction: column; align-items: flex-start; }
-    .top-buttons { width: 100%; justify-content: flex-start; }
-    #btn-reset { align-self: flex-end; margin-top: 10px; }
-    .marmita-item { flex-direction: column; align-items: flex-start; }
-    .marmita-item .controls { width: 100%; }
-    .marmita-item .controls button { flex: 1 1 auto; }
-  }
-</style>
+    @media (max-width: 600px) {
+      .header { flex-direction: column; align-items: flex-start; }
+      .top-buttons { width: 100%; justify-content: flex-start; }
+      #btn-reset { align-self: flex-end; margin-top: 10px; }
+      .marmita-item { flex-direction: column; align-items: flex-start; }
+      .marmita-item .controls { width: 100%; }
+      .marmita-item .controls button { flex: 1 1 auto; }
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-  <div class="header">
-    <h1>🥘 Controle de Marmitas</h1>
-    <div class="top-buttons">
-      <button class="btn btn-secondary" id="btn-cadastrar">Cadastrar Marmita</button>
-      <button class="btn btn-secondary" id="btn-historico">Histórico</button>
-      <button class="btn btn-secondary" id="btn-relatorio">Relatório</button>
-      <button class="btn btn-danger" id="btn-reset">Resetar Histórico</button>
+
+  <div class="container">
+    <div class="header">
+      <h1>🥘 Controle de Marmitas</h1>
+      <div class="top-buttons">
+        <button id="btn-cadastrar" class="btn btn-primary">Cadastrar</button>
+        <button id="btn-historico" class="btn btn-secondary">Histórico</button>
+        <button id="btn-relatorio" class="btn btn-secondary">Relatório</button>
+        <button id="btn-reset" class="btn btn-danger">Resetar Histórico</button>
+      </div>
+    </div>
+
+    <!-- Seção Estoque -->
+    <div id="estoque-section" class="section">
+      <h2>Estoque de Marmitas</h2>
+      <div id="marmita-lista" class="marmita-lista"></div>
+    </div>
+
+    <!-- Seção Cadastrar -->
+    <div id="cadastrar-section" class="section hidden">
+      <h2>Cadastrar Nova Marmita</h2>
+      <input type="text" id="input-nome" placeholder="Nome da marmita">
+      <input type="number" id="input-valor" placeholder="Valor (R$)">
+      <input type="number" id="input-quantidade" placeholder="Quantidade">
+      <button id="btn-salvar" class="btn btn-primary">Salvar Marmita</button>
+      <button id="btn-voltar-cadastrar" class="btn btn-secondary">Voltar</button>
+    </div>
+
+    <!-- Seção Histórico -->
+    <div id="historico-section" class="section hidden">
+      <h2>Histórico de Movimentações</h2>
+      <div id="lista-historico" class="historico"></div>
+      <button id="btn-voltar-historico" class="btn btn-secondary">Voltar</button>
+    </div>
+
+    <!-- Seção Relatório -->
+    <div id="relatorio-section" class="section hidden">
+      <h2>Relatório</h2>
+      <div id="relatorio-conteudo" class="relatorio"></div>
+      <button id="btn-voltar-relatorio" class="btn btn-secondary">Voltar</button>
     </div>
   </div>
 
-  <!-- Cadastro -->
-  <div id="cadastrar-section" class="section hidden">
-    <h2>Cadastrar Marmita</h2>
-    <input type="text" id="input-nome" placeholder="Nome da marmita">
-    <input type="number" id="input-valor" placeholder="Valor (R$)">
-    <input type="number" id="input-quantidade" placeholder="Quantidade">
-    <button class="btn btn-primary" id="btn-salvar">Salvar Marmita</button>
-    <button class="btn btn-secondary" id="btn-voltar-cadastrar">Voltar</button>
-  </div>
+  <script>
+    /* ================== JS ================== */
+    const STORAGE_KEY = "controleMarmitasData";
 
-  <!-- Estoque -->
-  <div id="estoque-section" class="section">
-    <h2>Estoque de Marmitas</h2>
-    <div id="lista-marmitas" class="marmita-lista"></div>
-  </div>
+    function saveData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+    function loadData() {
+      const s = localStorage.getItem(STORAGE_KEY);
+      return s ? JSON.parse(s) : { marmitas: [], historico: [] };
+    }
+    let data = loadData();
 
-  <!-- Histórico -->
-  <div id="historico-section" class="section hidden">
-    <h2>Histórico de Movimentações</h2>
-    <div id="lista-historico" class="historico"></div>
-    <button class="btn btn-secondary" id="btn-voltar-historico">Voltar</button>
-  </div>
+    function gerarId() { return Date.now().toString(); }
 
-  <!-- Relatório -->
-  <div id="relatorio-section" class="section hidden">
-    <h2>Relatório</h2>
-    <div id="relatorio-conteudo" class="relatorio"></div>
-    <button class="btn btn-secondary" id="btn-voltar-relatorio">Voltar</button>
-  </div>
-</div>
+    function mostrarSection(id) {
+      document.querySelectorAll(".section").forEach(sec => sec.classList.add("hidden"));
+      document.getElementById(id).classList.remove("hidden");
+      if(id === "estoque-section") atualizarListaMarmitas();
+    }
 
-<script>
-const STORAGE_KEY = "controleMarmitasData";
+    // Botões topo
+    document.getElementById("btn-cadastrar").onclick = () => mostrarSection("cadastrar-section");
+    document.getElementById("btn-historico").onclick = () => { atualizarHistorico(); mostrarSection("historico-section"); }
+    document.getElementById("btn-relatorio").onclick = () => { atualizarRelatorio(); mostrarSection("relatorio-section"); }
 
-function saveData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
-function loadData() {
-  const s = localStorage.getItem(STORAGE_KEY);
-  return s ? JSON.parse(s) : { marmitas: [], historico: [] };
-}
-let data = loadData();
+    // Voltar
+    document.getElementById("btn-voltar-cadastrar").onclick = () => mostrarSection("estoque-section");
+    document.getElementById("btn-voltar-historico").onclick = () => mostrarSection("estoque-section");
+    document.getElementById("btn-voltar-relatorio").onclick = () => mostrarSection("estoque-section");
 
-function gerarId() { return Date.now().toString(); }
+    // Salvar Marmita
+    document.getElementById("btn-salvar").onclick = () => {
+      const nome = document.getElementById("input-nome").value.trim();
+      const valor = parseFloat(document.getElementById("input-valor").value);
+      const quantidade = parseInt(document.getElementById("input-quantidade").value, 10);
+      if (!nome || isNaN(valor) || isNaN(quantidade)) { alert("Preencha tudo!"); return; }
+      const nova = { id: gerarId(), nome, valor, estoqueAtual: quantidade };
+      data.marmitas.push(nova);
+      data.historico.push({ timestamp: Date.now(), idMarmita: nova.id, delta: quantidade, tipo: "adição" });
+      saveData(data);
+      alert("Marmita cadastrada!");
+      mostrarSection("estoque-section");
+    }
 
-function mostrarSection(id) {
-  document.querySelectorAll(".section").forEach(sec => sec.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
-  if(id === "estoque-section") atualizarListaMarmitas();
-}
-
-// Botões topo
-document.getElementById("btn-cadastrar").onclick = () => mostrarSection("cadastrar-section");
-document.getElementById("btn-historico").onclick = () => { atualizarHistorico(); mostrarSection("historico-section"); }
-document.getElementById("btn-relatorio").onclick = () => { atualizarRelatorio(); mostrarSection("relatorio-section"); }
-
-// Voltar
-document.getElementById("btn-voltar-cadastrar").onclick = () => mostrarSection("estoque-section");
-document.getElementById("btn-voltar-historico").onclick = () => mostrarSection("estoque-section");
-document.getElementById("btn-voltar-relatorio").onclick = () => mostrarSection("estoque-section");
-
-// Salvar Marmita
-document.getElementById("btn-salvar").onclick = () => {
-  const nome = document.getElementById("input-nome").value.trim();
-  const valor = parseFloat(document.getElementById("input-valor").value);
-  const quantidade = parseInt(document.getElementById("input-quantidade").value, 10);
-  if (!nome || isNaN(valor) || isNaN(quantidade)) { alert("Preencha tudo!"); return; }
-  const nova = { id: gerarId(), nome, valor, estoqueAtual: quantidade };
-  data.marmitas.push(nova);
-  data.historico.push({ timestamp: Date.now(), idMarmita: nova.id, delta: quantidade, tipo: "adição" });
-  saveData(data);
-  alert("Marmita cadastrada!");
-  mostrarSection("estoque-section");
-}
-
-// Estoque
-function atualizarListaMarmitas() {
-  const cont = document.getElementById("lista-marmitas");
-  cont.innerHTML = "";
-  if(data.marmitas.length === 0){
-    cont.innerHTML = "<p>Nenhuma marmita cadastrada.</p>";
-    return;
-  }
-
-  data.marmitas.forEach(m => {
-    const div = document.createElement("div");
-    div.className = "marmita-item"; // mesmo estilo de input/card
-
-    const info = document.createElement("div");
-    info.innerHTML = `<strong>${m.nome}</strong> — R$ ${m.valor.toFixed(2)}<br>Estoque: ${m.estoqueAtual}`;
-
-    const ctr = document.createElement("div");
-    ctr.className = "controls";
-
-    [[+10,"btn-primary"],[+1,"btn-primary"],[-1,"btn-danger"],[-5,"btn-danger"]].forEach(([delta,cls])=>{
-      const btn = document.createElement("button");
-      btn.className = "btn "+cls;
-      btn.innerText = delta>0?`+${delta}`:`${delta}`;
-      btn.onclick = () => alterarEstoque(m.id, delta);
-      ctr.appendChild(btn);
-    });
-
-    const btnExcluir = document.createElement("button");
-    btnExcluir.className = "btn btn-danger";
-    btnExcluir.innerText = "❌ Excluir";
-    btnExcluir.onclick = () => {
-      const confirma = confirm(`Deseja excluir a marmita "${m.nome}"?`);
-      if(confirma){
-        data.marmitas = data.marmitas.filter(x => x.id !== m.id);
-        data.historico = data.historico.filter(h => h.idMarmita !== m.id);
-        saveData(data);
-        atualizarListaMarmitas();
-        atualizarHistorico();
-        atualizarRelatorio();
+    function atualizarListaMarmitas() {
+      const lista = document.getElementById("marmita-lista");
+      lista.innerHTML = "";
+      if(data.marmitas.length === 0){
+        lista.innerHTML = "<p>Nenhuma marmita cadastrada.</p>";
+        return;
       }
-    };
-    ctr.appendChild(btnExcluir);
 
-    div.appendChild(info);
-    div.appendChild(ctr);
-    cont.appendChild(div);
-  });
+      data.marmitas.forEach(m => {
+        const div = document.createElement("div");
+        div.className = "marmita-item";
+
+        const info = document.createElement("div");
+        info.innerHTML = `<strong>${m.nome}</strong> — R$ ${m.valor.toFixed(2)}<br>Estoque: ${m.estoqueAtual}`;
+
+        const ctr = document.createElement("div");
+        ctr.className = "controls";
+
+        [[+10,"btn-primary"],[+1,"btn-primary"],[-1,"btn-danger"],[-5,"btn-danger"]].forEach(([delta,cls])=>{
+          const btn = document.createElement("button");
+          btn.className = "btn "+cls;
+          btn.innerText = delta>0?`+${delta}`:`${delta}`;
+          btn.onclick = () => alterarEstoque(m.id, delta);
+          ctr.appendChild(btn);
+        });
+
+        const btnExcluir = document.createElement("button");
+        btnExcluir.className = "btn btn-danger";
+        btnExcluir.innerText = "❌ Excluir";
+        btnExcluir.onclick = () => {
+          const confirma = confirm(`Deseja excluir a marmita "${m.nome}"?`);
+          if(confirma){
+            data.marmitas = data.marmitas.filter(x => x.id !== m.id);
+            data.historico = data.historico.filter(h => h.idMarmita !== m.id);
+            saveData(data);
+            atualizarListaMarmitas();
+            atualizarHistorico();
+            atualizarRelatorio();
+          }
+        };
+        ctr.appendChild(btnExcluir);
+
+        div.appendChild(info);
+        div.appendChild(ctr);
+        lista.appendChild(div);
+      });
+    }
+
+    function alterarEstoque(id, delta) {
+  const m = data.marmitas.find(x => x.id === id);
+  if (!m) return;
+  m.estoqueAtual += delta;
+  if (m.estoqueAtual < 0) m.estoqueAtual = 0;
+  data.historico.push({ timestamp: Date.now(), idMarmita: id, delta, tipo: delta > 0 ? "adição" : "remoção" });
+  saveData(data);
+  atualizarListaMarmitas();
 }
-
-function alterarEstoque(id, delta) {
-  const m = data.marmitas.find(x=>x.id===id); if(!m) return;
-  m.estoqueAtual += delta; if(m.estoqueAtual<0) m.estoqueAtual=0;
-  data.historico.push({ timestamp: Date.now(), idMarmita: id, delta, tipo: delta>0?"adição":"remoção" });
-  saveData(data); atualizarListaMarmitas();
-}
-
-// Histórico
-function atualizarHistorico() {
-  const cont = document.getElementById("lista-historico");
-  cont.innerHTML = "";
-  [...data.historico].sort((a,b)=>b.timestamp-a.timestamp).forEach(h=>{
-    const marmita=data.marmitas.find(m=>m.id===h.idMarmita);
-    const dt=new Date(h.timestamp).toLocaleString("pt-BR");
-    const nome=marmita?marmita.nome:"–";
-    cont.innerHTML += `<div>${dt}: ${h.tipo==="adição"?"Adicionado":"Removido"} ${h.delta} → ${nome}</div>`;
-  });
-}
-
-// Relatório
-function atualizarRelatorio() {
-  const div = document.getElementById("relatorio-conteudo");
-  div.innerHTML = "";
-  let prod=0,rem=0;
-  data.historico.forEach(h=>{ if(h.delta>0) prod+=h.delta; else rem+=-h.delta; });
-  div.innerHTML += `<p>Total produzido: ${prod}</p>`;
-  div.innerHTML += `<p>Total vendido/removido: ${rem}</p>`;
-  div.innerHTML += `<p>Estoque atual geral: ${data.marmitas.reduce((s,m)=>s+m.estoqueAtual,0)}</p>`;
-  data.marmitas.forEach(m=>div.innerHTML+=`<p>${m.nome}: ${m.estoqueAtual}</p>`);
-}
-
-// Resetar histórico
-document.getElementById("btn-reset").onclick = () => {
-  const confirma = confirm("Tem certeza que deseja resetar TODO o histórico e relatório? Esta ação não pode ser desfeita.");
-  if(confirma){
-    data.historico = [];
-    saveData(data);
-    atualizarHistorico();
-    atualizarRelatorio();
-    alert("Histórico e relatório resetados!");
-  }
-}
-
-// Inicial
-mostrarSection("estoque-section");
-</script>
-</body>
-</html>
