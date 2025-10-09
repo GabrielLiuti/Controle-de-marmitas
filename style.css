@@ -2,8 +2,12 @@ body {
   margin: 0;
   padding: 20px;
   font-family: Arial, sans-serif;
-  background-color: #ffffff;
-  color: #333333;
+  background-image: url("imagens/marmitas.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #333;
   box-sizing: border-box;
 }
 
@@ -26,6 +30,8 @@ body {
   margin: 0;
   flex: 1;
   min-width: 200px;
+  color: #fff;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
 }
 
 .top-buttons {
@@ -34,9 +40,7 @@ body {
   gap: 10px;
 }
 
-#btn-reset {
-  flex-shrink: 0;
-}
+#btn-reset { flex-shrink: 0; }
 
 .btn {
   display: inline-flex;
@@ -54,16 +58,52 @@ body {
 .btn-secondary { background-color: #03a9f4; color: white; }
 .btn-danger { background-color: #e57373; color: white; }
 
-.section { margin-top: 20px; }
+.section {
+  margin-top: 20px;
+  background-color: #ffffff; /* fundo branco sólido */
+  padding: 20px;
+  border-radius: 10px;
+}
+
 .hidden { display: none; }
 
 input {
   font-size: 1em;
-  padding: 8px;
-  width: 100%;
-  margin: 10px 0;
-  box-sizing: border-box;
+  padding: 6px 12px;          /* altura confortável */
+  width: 250px;                /* largura fixa menor */
+  margin: 8px auto;            /* centraliza o campo */
+  display: block;              /* necessário para centralizar com margin auto */
+  border-radius: 25px;         /* arredondado tipo chat */
+  border: 1px solid #ccc;
+  background-color: #ffffff;   /* fundo branco */
+  color: #000;                 /* texto preto */
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
 }
+
+.marmita-lista {
+  margin-top: 15px;
+}
+
+.marmita-item {
+  background-color: #ffffff;       /* fundo branco */
+  border-radius: 25px;             /* arredondado igual ao input */
+  padding: 12px 16px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  color: #000;
+}
+
+.marmita-item .controls button {
+  border-radius: 20px;             /* arredondado nos botões de +1, -1, etc */
+  padding: 6px 12px;
+  font-size: 0.9em;
+}
+
+
 
 .marmita-item {
   border: 1px solid #cccccc;
@@ -74,6 +114,8 @@ input {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  background-color: #ffffff; /* fundo branco */
+  color: #000; /* texto preto */
 }
 
 .marmita-item .controls {
@@ -83,27 +125,20 @@ input {
   margin-top: 5px;
 }
 
-@media (max-width: 600px) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .top-buttons {
-    width: 100%;
-    justify-content: flex-start;
-  }
-  #btn-reset {
-    align-self: flex-end;
-    margin-top: 10px;
-  }
-  .marmita-item {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .marmita-item .controls {
-    width: 100%;
-  }
-  .marmita-item .controls button {
-    flex: 1 1 auto;
-  }
+.historico, .relatorio {
+  background-color: #ffffff; /* fundo branco */
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 1em;
+  color: #000; /* texto preto */
 }
+
+@media (max-width: 600px) {
+  .header { flex-direction: column; align-items: flex-start; }
+  .top-buttons { width: 100%; justify-content: flex-start; }
+  #btn-reset { align-self: flex-end; margin-top: 10px; }
+  .marmita-item { flex-direction: column; align-items: flex-start; }
+  .marmita-item .controls { width: 100%; }
+  .marmita-item .controls button { flex: 1 1 auto; }
+}
+
