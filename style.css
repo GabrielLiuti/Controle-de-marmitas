@@ -2,12 +2,12 @@ body {
   margin: 0;
   padding: 20px;
   font-family: Arial, sans-serif;
-  background-image: url("/IMG/IMG1.jpg");
+  background-image: url("imagens/Marmitas.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  color: #333;
+  color: #000; /* texto preto — visível em fundo branco */
   box-sizing: border-box;
 }
 
@@ -30,8 +30,8 @@ body {
   margin: 0;
   flex: 1;
   min-width: 200px;
-  color: #fff;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+  color: #000; /* texto preto */
+  text-shadow: none; /* remove sombra escura */
 }
 
 .top-buttons {
@@ -141,6 +141,7 @@ input {
   .marmita-item .controls { width: 100%; }
   .marmita-item .controls button { flex: 1 1 auto; }
 }
+
 
 
 
