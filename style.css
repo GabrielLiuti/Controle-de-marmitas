@@ -3,7 +3,7 @@ body {
   padding: 20px;
   font-family: Arial, sans-serif;
   background-color: #ffffff; /* fundo branco */
-  color: #000000; /* texto preto */
+  color: #000000;            /* texto preto */
   box-sizing: border-box;
 }
 
@@ -26,7 +26,7 @@ body {
   margin: 0;
   flex: 1;
   min-width: 200px;
-  color: #000000;
+  color: #000;               /* título preto */
 }
 
 .top-buttons {
@@ -55,11 +55,10 @@ body {
 
 .section {
   margin-top: 20px;
-  background-color: #ffffff;
+  background-color: #ffffff; /* fundo branco sólido */
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  color: #000;
+  color: #000;               /* texto preto */
 }
 
 .hidden { display: none; }
@@ -72,18 +71,23 @@ input {
   display: block;
   border-radius: 25px;
   border: 1px solid #ccc;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #ffffff; /* fundo branco */
+  color: #000000;            /* texto preto */
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
 }
 
-.marmita-lista {
+.marmita-lista, .historico, .relatorio {
   margin-top: 15px;
+  background-color: #ffffff;  /* fundo branco */
+  border-radius: 15px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  color: #000000;             /* texto preto */
 }
 
 .marmita-item {
-  background-color: #ffffff;
-  border-radius: 25px;
+  background-color: #ffffff;  /* fundo branco */
+  border-radius: 25px;        /* arredondado */
   padding: 12px 16px;
   margin: 10px 0;
   display: flex;
@@ -91,21 +95,13 @@ input {
   align-items: center;
   flex-wrap: wrap;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  color: #000;
+  color: #000000;             /* texto preto */
 }
 
 .marmita-item .controls button {
   border-radius: 20px;
   padding: 6px 12px;
   font-size: 0.9em;
-}
-
-.historico, .relatorio {
-  background-color: #ffffff;
-  padding: 10px;
-  border-radius: 6px;
-  font-size: 1em;
-  color: #000;
 }
 
 @media (max-width: 600px) {
